@@ -1,7 +1,7 @@
--- Lists all bands with Glam rock as their main style
--- ranked by their longevity, Column names: band_name and lifespan (in years)
--- Use attributes formed and split for computing lifespan
--- Script should execute on any database
+-- Write SQL script that ranks country origins of bands
+-- Ordered by the number of (non-unique) fans
+-- Column must be origin and nb_fans
+-- Script can be executed on any database
 
-SELECT band_name, COALESCE(split, 2022) - formed as lifespan FROM metal_bands
-WHERE style LIKE '%Glam rock%' ORDER BY lifespan DESC;
+SELECT origin, SUM(fans) as nb_fans FROM metal_bands
+GROUP BY origin ORDER BY nb_fans DESC;
