@@ -1,15 +1,7 @@
--- Create function SafeDiv that divides (and returns) the first by the second number
--- or returns 0 if second number is equal to 0
--- function SafeDiv takes 2 arguments: a, INT, b, INT
--- returns a / b or 0 if b == 0
+-- Creates a view need_meeting that lists all students that have a score under 80 (strict)
+-- no last_meeting or more than 1 month
 
-DELIMITER //
-
-DROP FUNCTION IF EXISTS SafeDiv;
-CREATE FUNCTION SafeDiv(a INT, b INT)
-RETURNS FLOAT DETERMINISTIC
-BEGIN
-	RETURN (IF (b = 0, 0, a / b));
-END //
-
-DELIMITER ;
+DROP VIEW IF EXISTS need_meeting;
+CREATE VIEW need_meeting AS
+SELECT name FROM students WHERE score < 80
+AND (students.last_meeting IS NULL OR students.last_meeting < DATE_ADD(NOW(), INTERVAL -1 MONTH));
